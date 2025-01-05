@@ -107,7 +107,6 @@ socket_t* socket_create_client(const char* hostname, const char* servname) {
 socket_t* socket_accept(socket_t* skt) {
   int peer_addr = accept(skt->fd, NULL, NULL);
   if (peer_addr == -1) return NULL;
-  printf("New connection: %d\n", peer_addr);
   return socket_create(peer_addr);
 }
 
@@ -131,7 +130,7 @@ void socket_recv(socket_t* skt, void* data, size_t length, bool* was_closed) {
   } while (bytes_recv < length);
 }
 
-void socket_send(socket_t* skt, void* data, size_t length, bool* was_closed) {
+void socket_send(socket_t* skt, const void* data, size_t length, bool* was_closed) {
   size_t bytes_send = 0;
   *was_closed = false;
 
